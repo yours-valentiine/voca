@@ -1,0 +1,6 @@
+analyzer:
+  errors:
+    annotate_overrides: ignore
+include: package:flutter_lints/flutter.yaml
+plugins:
+  riverpod_lint: ^3.1.3

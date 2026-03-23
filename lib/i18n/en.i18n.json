@@ -1,0 +1,83 @@
+{
+    "placeholder": {
+        "empty": "Here is empty"
+    },
+    "base": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel"
+    },
+    "root": {
+        "dictionary": "Dictionary",
+        "repeat": "Repeat"
+    },
+    "menu": {
+        "create": {
+            "button": "+ Create new dictionary",
+            "title": "New dictionary",
+            "field": "Name",
+            "formButton": "Create"
+        }
+    },
+    "aboutWord": {
+        "word": {
+            "title": "Word",
+            "validation": "Input word"
+        },
+        "transcription": "Transcription",
+        "note": "Note",
+        "translates": "Translates",
+        "addTranslate": "+ Add translate",
+        "placeholderNote": "Input note...",
+        "editToolip": "Edit word"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": {
+            "title": "Language"
+        },
+        "theme": {
+            "title": "Theme",
+            "dynamicColor": {
+                "title": "Dynamic color",
+                "description": "Allows you to change the app's theme color based on user settings.",
+                "dialogTitle": "Pick up color"
+            }
+        },
+        "backup": {
+            "title": "Backup"
+        },
+        "other": {
+            "title": "Other",
+            "about": {
+                "title": "About"
+            }
+        }
+    },
+    "repeat": {
+        "title": "Repeat",
+        "ready": {
+            "title": "Ready for repeat",
+            "all(plural, rich)": {
+                "one": "$n ${small(word)}",
+                "other": "$n  ${small(words)}"
+            },
+            "new": {
+                "other": "+$n new"
+            },
+            "durations": "~$n min"
+        },
+        "empty": "All words are repeated",
+        "startButton": "Start",
+        "skip": {
+            "tooltip": "Skip exercise",
+            "title": "Skip card",
+            "content": "Are you sure you want to skip this card? It will be counted as failed.",
+            "hiddenMessage": "Do not show this message during this session.",
+            "yes": "Skip"
+        },
+        "check": {
+            "title": "Check"
+        }
+    }
+}
