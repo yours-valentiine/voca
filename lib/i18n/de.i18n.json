@@ -1,0 +1,106 @@
+{
+    "placeholder": {
+        "empty": "Hier ist nichts"
+    },
+    "base": {
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "cancel": "Abbrechen"
+    },
+    "root": {
+        "dictionary": "Wörterbuch",
+        "repeat": "Wiederholen"
+    },
+    "menu": {
+        "create": {
+            "button": "+ Neues Wörterbuch",
+            "title": "Neues Wörterbuch",
+            "field": "Name",
+            "formButton": "Erstellen"
+        }
+    },
+    "aboutWord": {
+        "word": {
+            "title": "Wort",
+            "validation": "Wort eingeben"
+        },
+        "transcription": "Transkription",
+        "note": "Notiz",
+        "translates": "Übersetzungen",
+        "addTranslate": "+ Übersetzung hinzufügen",
+        "placeholderNote": "Notiz eingeben...",
+        "editToolip": "Wort bearbeiten"
+    },
+    "settings": {
+        "title": "Einstellungen",
+        "language": {
+            "title": "Sprache"
+        },
+        "theme": {
+            "title": "Design",
+            "dynamicColor": {
+                "title": "Dynamische Farbe",
+                "description": "Ermöglicht die Änderung der Designfarbe der App basierend auf den Benutzereinstellungen.",
+                "dialogTitle": "Farbe auswählen"
+            }
+        },
+        "backup": {
+            "title": "Sicherung",
+            "export": {
+                "title": "Daten exportieren",
+                "description": "Sichern Sie Ihre Daten",
+                "success": "Daten exportiert"
+            },
+            "import": {
+                "title": "Daten importieren",
+                "description": "Laden Sie zuvor gespeicherte Daten.",
+                "success": "Daten importiert"
+            }
+        },
+        "other": {
+            "title": "Sonstiges",
+            "about": {
+                "title": "Über"
+            }
+        }
+    },
+    "repeat": {
+        "title": "Wiederholen",
+        "ready": {
+            "title": "Bereit zur Wiederholung",
+            "all(plural, rich)": {
+                "one": "$n ${small(Wort)}",
+                "other": "$n ${small(Wörter)}"
+            },
+            "new": {
+                "other": "+$n neue"
+            },
+            "durations": "~$n min"
+        },
+        "empty": "Alle Wörter wurden wiederholt",
+        "startButton": "Starten",
+        "exersize": {
+            "title": "Geben Sie eine der Übersetzungen des Wortes ein",
+            "answerLabel": "Übersetzung"
+        },
+        "skip": {
+            "tooltip": "Übung überspringen",
+            "title": "Karte überspringen",
+            "content": "Möchten Sie diese Karte wirklich überspringen? Sie wird als nicht bestanden gewertet.",
+            "hiddenMessage": "Diese Nachricht während dieser Sitzung nicht mehr anzeigen.",
+            "yes": "Überspringen"
+        },
+        "check": {
+            "title": "Prüfen",
+            "correctTitle": "Richtig!",
+            "incorrectTitle": "Falsch",
+            "rating": {
+                "title": "Schwierigkeit bewerten:",
+                "easy": "Einfach",
+                "good": "Gut",
+                "hard": "Schwer"
+            },
+            "next": "Weiter"
+        }
+    }
+}

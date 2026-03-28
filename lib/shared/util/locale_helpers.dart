@@ -4,5 +4,7 @@ extension LocaleHelpers on AppLocale {
   String toDisplay() => switch (this) {
     AppLocale.en => "English",
     AppLocale.ru => "Русский",
+    AppLocale.de => "Deutsch",
+    AppLocale.fr => "Le français",
   };
 }

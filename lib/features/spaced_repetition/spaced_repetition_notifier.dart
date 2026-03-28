@@ -71,10 +71,8 @@ class SpacedRepetitionNotifier extends AsyncNotifier<SpacedRepetitionData> {
     (data) => state = AsyncValue.data(data.copyWith(hiddenWarningSkip: hidden)),
   );
 
-  void setRating(double value) => state.whenData(
-    (data) => state = AsyncValue.data(
-      data.copyWith(rating: ExerciseRating.fromValue(value)),
-    ),
+  void setRating(ExerciseRating value) => state.whenData(
+    (data) => state = AsyncValue.data(data.copyWith(rating: value)),
   );
 
   Future<void> checkCard(String translate) async {
@@ -98,7 +96,6 @@ class SpacedRepetitionNotifier extends AsyncNotifier<SpacedRepetitionData> {
             state.requireValue.copyWith(currectCardState: .checked(false)),
           );
         }
-        calculateCard();
       });
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
@@ -130,6 +127,8 @@ class SpacedRepetitionNotifier extends AsyncNotifier<SpacedRepetitionData> {
   void nextCard() {
     try {
       final currentState = state.requireValue;
+
+      calculateCard();
 
       if (currentState.isLastCard) {
         state = AsyncValue.data(

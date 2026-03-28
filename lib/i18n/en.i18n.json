@@ -47,7 +47,7 @@
         "backup": {
             "title": "Backup",
             "export": {
-                "title":"Data export",
+                "title": "Data export",
                 "description": "Back up your data",
                 "success": "Data exported"
             },
@@ -79,6 +79,10 @@
         },
         "empty": "All words are repeated",
         "startButton": "Start",
+        "exersize": {
+            "title": "Enter one of the translations of the word",
+            "answerLabel": "Translate"
+        },
         "skip": {
             "tooltip": "Skip exercise",
             "title": "Skip card",
@@ -87,7 +91,16 @@
             "yes": "Skip"
         },
         "check": {
-            "title": "Check"
+            "title": "Check",
+            "correctTitle": "Correct!",
+            "incorrectTitle": "Incorrect",
+            "rating": {
+                "title": "Rate the difficulty:",
+                "easy": "Easy",
+                "good": "Good",
+                "hard": "Hard"
+            },
+            "next": "Next"
         }
     }
 }

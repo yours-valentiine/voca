@@ -1,0 +1,106 @@
+{
+    "placeholder": {
+        "empty": "Ici c'est vide"
+    },
+    "base": {
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "cancel": "Annuler"
+    },
+    "root": {
+        "dictionary": "Dictionnaire",
+        "repeat": "Répéter"
+    },
+    "menu": {
+        "create": {
+            "button": "+ Nouveau dictionnaire",
+            "title": "Nouveau dictionnaire",
+            "field": "Nom",
+            "formButton": "Créer"
+        }
+    },
+    "aboutWord": {
+        "word": {
+            "title": "Mot",
+            "validation": "Saisir le mot"
+        },
+        "transcription": "Transcription",
+        "note": "Note",
+        "translates": "Traductions",
+        "addTranslate": "+ Ajouter une traduction",
+        "placeholderNote": "Écrire une note...",
+        "editToolip": "Modifier le mot"
+    },
+    "settings": {
+        "title": "Paramètres",
+        "language": {
+            "title": "Langue"
+        },
+        "theme": {
+            "title": "Thème",
+            "dynamicColor": {
+                "title": "Couleur dynamique",
+                "description": "Permet de modifier la couleur du thème de l'application en fonction des réglages utilisateur.",
+                "dialogTitle": "Choisir une couleur"
+            }
+        },
+        "backup": {
+            "title": "Sauvegarde",
+            "export": {
+                "title": "Exporter les données",
+                "description": "Sauvegarder vos données",
+                "success": "Données exportées"
+            },
+            "import": {
+                "title": "Importer les données",
+                "description": "Charger les données précédemment enregistrées.",
+                "success": "Données importées"
+            }
+        },
+        "other": {
+            "title": "Autre",
+            "about": {
+                "title": "À propos"
+            }
+        }
+    },
+    "repeat": {
+        "title": "Répéter",
+        "ready": {
+            "title": "Prêt pour la répétition",
+            "all(plural, rich)": {
+                "one": "$n ${small(mot)}",
+                "other": "$n ${small(mots)}"
+            },
+            "new": {
+                "other": "+$n nouveaux"
+            },
+            "durations": "~$n min"
+        },
+        "empty": "Tous les mots sont répétés",
+        "startButton": "Commencer",
+        "exersize": {
+            "title": "Entrez l'une des traductions du mot",
+            "answerLabel": "Traduction"
+        },
+        "skip": {
+            "tooltip": "Ignorer l'exercice",
+            "title": "Ignorer la carte",
+            "content": "Voulez-vous vraiment ignorer cette carte ? Elle sera comptée comme échouée.",
+            "hiddenMessage": "Ne plus afficher ce message pendant cette session.",
+            "yes": "Ignorer"
+        },
+        "check": {
+            "title": "Vérifier",
+            "correctTitle": "Correct !",
+            "incorrectTitle": "Incorrect",
+            "rating": {
+                "title": "Évaluer la difficulté :",
+                "easy": "Facile",
+                "good": "Bon",
+                "hard": "Difficile"
+            },
+            "next": "Suivant"
+        }
+    }
+}

@@ -116,7 +116,7 @@ class SettingsScreen extends ConsumerWidget {
   void _aboutVocaShow(BuildContext context) => showAboutDialog(
     context: context,
     applicationName: "Voca",
-    applicationVersion: "v.0.0.1-dev.2",
+    applicationVersion: "v.0.1.0-alpha.1",
     applicationLegalese: "\u00a9 2026 yours.valentiine",
     children: [
       const SizedBox(height: 12),
