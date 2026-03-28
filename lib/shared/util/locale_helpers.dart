@@ -6,5 +6,6 @@ extension LocaleHelpers on AppLocale {
     AppLocale.ru => "Русский",
     AppLocale.de => "Deutsch",
     AppLocale.fr => "Le français",
+    AppLocale.es => "Español",
   };
 }

@@ -82,7 +82,8 @@
         "startButton": "Начать",
         "exersize": {
             "title": "Введите один из переводов слова",
-            "answerLabel": "Перевод"
+            "answerLabel": "Перевод",
+            "validationError": "Введите перевод или пропустите слово"
         },
         "skip": {
             "tooltip": "Пропустить задание",

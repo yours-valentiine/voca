@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:fsrs/fsrs.dart' show Rating, State;
+import 'package:path_provider/path_provider.dart';
 import 'package:voca/data/local/daos.dart';
 import 'package:voca/data/local/tables.dart';
 import 'package:voca/data/local/views.dart';
@@ -32,7 +33,12 @@ class VocaDatabase extends _$VocaDatabase {
     : super(executor ?? _openConnection());
 
   static QueryExecutor _openConnection() {
-    return driftDatabase(name: "voca_dictionary");
+    return driftDatabase(
+      name: "voca_dictionary",
+      native: DriftNativeOptions(
+        databaseDirectory: () => getApplicationSupportDirectory(),
+      ),
+    );
   }
 
   @override

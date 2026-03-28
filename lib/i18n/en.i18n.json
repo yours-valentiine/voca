@@ -81,7 +81,8 @@
         "startButton": "Start",
         "exersize": {
             "title": "Enter one of the translations of the word",
-            "answerLabel": "Translate"
+            "answerLabel": "Translate",
+            "validationError": "Enter a translation or skip a word"
         },
         "skip": {
             "tooltip": "Skip exercise",

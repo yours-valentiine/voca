@@ -81,7 +81,8 @@
         "startButton": "Commencer",
         "exersize": {
             "title": "Entrez l'une des traductions du mot",
-            "answerLabel": "Traduction"
+            "answerLabel": "Traduction",
+            "validationError": "Saisissez une traduction ou passez un mot"
         },
         "skip": {
             "tooltip": "Ignorer l'exercice",

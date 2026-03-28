@@ -1,0 +1,107 @@
+{
+    "placeholder": {
+        "empty": "Aquí está vacío"
+    },
+    "base": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar"
+    },
+    "root": {
+        "dictionary": "Diccionario",
+        "repeat": "Repetir"
+    },
+    "menu": {
+        "create": {
+            "button": "+ Crear nuevo diccionario",
+            "title": "Nuevo diccionario",
+            "field": "Nombre",
+            "formButton": "Crear"
+        }
+    },
+    "aboutWord": {
+        "word": {
+            "title": "Palabra",
+            "validation": "Ingresa una palabra"
+        },
+        "transcription": "Transcripción",
+        "note": "Nota",
+        "translates": "Traducciones",
+        "addTranslate": "+ Agregar traducción",
+        "placeholderNote": "Ingresa una nota...",
+        "editToolip": "Editar palabra"
+    },
+    "settings": {
+        "title": "Ajustes",
+        "language": {
+            "title": "Idioma"
+        },
+        "theme": {
+            "title": "Tema",
+            "dynamicColor": {
+                "title": "Color dinámico",
+                "description": "Permite cambiar el color del tema de la aplicación según la configuración del usuario.",
+                "dialogTitle": "Elige un color"
+            }
+        },
+        "backup": {
+            "title": "Copia de seguridad",
+            "export": {
+                "title": "Exportar datos",
+                "description": "Haz una copia de seguridad de tus datos",
+                "success": "Datos exportados"
+            },
+            "import": {
+                "title": "Importar datos",
+                "description": "Cargar datos guardados previamente.",
+                "success": "Datos importados"
+            }
+        },
+        "other": {
+            "title": "Otros",
+            "about": {
+                "title": "Acerca de"
+            }
+        }
+    },
+    "repeat": {
+        "title": "Repetir",
+        "ready": {
+            "title": "Listo para repetir",
+            "all(plural, rich)": {
+                "one": "$n ${small(palabra)}",
+                "other": "$n ${small(palabras)}"
+            },
+            "new": {
+                "other": "+$n nuevas"
+            },
+            "durations": "~$n min"
+        },
+        "empty": "Todas las palabras están repetidas",
+        "startButton": "Comenzar",
+        "exersize": {
+            "title": "Ingresa una de las traducciones de la palabra",
+            "answerLabel": "Traducción",
+            "validationError": "Ingresa una traducción u omite la palabra"
+        },
+        "skip": {
+            "tooltip": "Omitir ejercicio",
+            "title": "Omitir tarjeta",
+            "content": "¿Estás seguro de que quieres omitir esta tarjeta? Se contará como fallo.",
+            "hiddenMessage": "No mostrar este mensaje durante esta sesión.",
+            "yes": "Omitir"
+        },
+        "check": {
+            "title": "Comprobar",
+            "correctTitle": "¡Correcto!",
+            "incorrectTitle": "Incorrecto",
+            "rating": {
+                "title": "Califica la dificultad:",
+                "easy": "Fácil",
+                "good": "Bien",
+                "hard": "Difícil"
+            },
+            "next": "Siguiente"
+        }
+    }
+}

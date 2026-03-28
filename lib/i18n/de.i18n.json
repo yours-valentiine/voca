@@ -81,7 +81,8 @@
         "startButton": "Starten",
         "exersize": {
             "title": "Geben Sie eine der Übersetzungen des Wortes ein",
-            "answerLabel": "Übersetzung"
+            "answerLabel": "Übersetzung",
+            "validationError": "Geben Sie eine Übersetzung ein oder überspringen Sie ein Wort"
         },
         "skip": {
             "tooltip": "Übung überspringen",

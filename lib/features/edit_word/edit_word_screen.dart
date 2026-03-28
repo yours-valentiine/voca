@@ -313,7 +313,6 @@ class _TranslateTextFieldState extends State<TranslateTextField> {
             isCollapsed: true,
             fillColor: colorScheme(context).surfaceContainer,
           ),
-          maxLines: null,
           style: typography(context).bodyLarge,
           onChanged: widget.onChanged,
         ),

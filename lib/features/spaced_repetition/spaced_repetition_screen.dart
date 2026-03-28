@@ -19,6 +19,7 @@ class SpacedRepetitionScreen extends ConsumerStatefulWidget {
 class _SpacedRepetitionScreenState
     extends ConsumerState<SpacedRepetitionScreen> {
   final TextEditingController _answerController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -89,48 +90,65 @@ class _SpacedRepetitionScreenState
                   horizontal: 12,
                   vertical: 8,
                 ),
-                child: Column(
-                  mainAxisAlignment: .spaceBetween,
-                  children: [
-                    Text(
-                      translations(context).repeat.exersize.title,
-                      style: typography(context).labelLarge,
-                    ),
-                    Text(
-                      currentCard.word,
-                      style: typography(context).headlineMedium,
-                    ),
-                    Column(
-                      crossAxisAlignment: .end,
-                      children: [
-                        TextField(
-                          enabled: data.currectCardState.maybeWhen(
-                            checked: (_) => false,
-                            orElse: () => null,
-                          ),
-                          controller: _answerController,
-                          decoration: InputDecoration(
-                            label: Text(
-                              translations(context).repeat.exersize.answerLabel,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      Text(
+                        translations(context).repeat.exersize.title,
+                        style: typography(context).labelLarge,
+                      ),
+                      Text(
+                        currentCard.word,
+                        style: typography(context).headlineMedium,
+                      ),
+                      Column(
+                        crossAxisAlignment: .end,
+                        children: [
+                          TextFormField(
+                            enabled: data.currectCardState.maybeWhen(
+                              checked: (_) => false,
+                              orElse: () => null,
                             ),
-                          ),
-                          autocorrect: false,
-                          autofocus: true,
-                        ),
-                        const SizedBox(height: 16),
-                        FilledButton.icon(
-                          onPressed: data.currectCardState.maybeWhen(
-                            checked: (_) => null,
-                            orElse: () => () async {
-                              await notifier.checkCard(_answerController.text);
+                            controller: _answerController,
+                            decoration: InputDecoration(
+                              label: Text(
+                                translations(
+                                  context,
+                                ).repeat.exersize.answerLabel,
+                              ),
+                            ),
+                            autocorrect: false,
+                            autofocus: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return translations(context).repeat.exersize.validationError;
+                              }
+                              return null;
                             },
                           ),
-                          icon: const Icon(Icons.check),
-                          label: Text(translations(context).repeat.check.title),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(height: 16),
+                          FilledButton.icon(
+                            onPressed: data.currectCardState.maybeWhen(
+                              checked: (_) => null,
+                              orElse: () => () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await notifier.checkCard(
+                                    _answerController.text,
+                                  );
+                                }
+                              },
+                            ),
+                            icon: const Icon(Icons.check),
+                            label: Text(
+                              translations(context).repeat.check.title,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               data.currectCardState.maybeWhen(
