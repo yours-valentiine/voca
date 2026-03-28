@@ -23,7 +23,7 @@ class DictionaryNotifier extends StreamNotifier<List<WordModel>> {
 
   Future<void> deleteWord(UuidValue wordId) async {
     try {
-      await _dictionaryRepository.deleteSingle(wordId);
+      await _dictionaryRepository.deleteSingleWord(wordId);
     } catch (err, stackTrace) {
       state = AsyncValue.error(err, stackTrace);
     }

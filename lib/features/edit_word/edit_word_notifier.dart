@@ -123,7 +123,7 @@ class EditWordNotifier extends AsyncNotifier<WordModel> {
       return false;
     }
 
-    await _dictionaryRepository.addSingleWord(state.value!);
+    await _dictionaryRepository.upsertSingleWord(state.value!);
     return true;
   }
 }

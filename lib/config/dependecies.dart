@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:voca/shared/service/backup/backup_service.dart';
 import 'package:voca/data/local/daos.dart';
 import 'package:voca/data/local/database.dart';
 import 'package:voca/data/repository/fsrs_repository.dart';
-import 'package:voca/features/create_dictionary/create_dictionary_notifier.dart';
+import 'package:voca/features/edit_dictionary/edit_dictionary_notifier.dart';
 import 'package:voca/features/dictionary/dictionary_notifier.dart';
 import 'package:voca/features/edit_word/edit_word_notifier.dart';
 import 'package:voca/features/root/root_notifier.dart';
@@ -67,6 +68,13 @@ final fsrsRepositoryProvider = Provider<FsrsRepository>(
 
 final vocaSettingsProvider = Provider<VocaSettings>((ref) => VocaSettings());
 
+final backupServiceProvider = Provider<BackupService>(
+  (ref) => BackupService(
+    vocaDatabase: ref.watch(databaseProvider),
+    dictionaryRepository: ref.watch(dictionaryRepositoryProvider),
+  ),
+);
+
 // #endregion
 
 // #region NOTIFIERS
@@ -83,8 +91,8 @@ final rootNotifierProvider = StreamNotifierProvider.autoDispose(
   RootNotifier.new,
 );
 
-final createDictionaryNotifierProvider = NotifierProvider.autoDispose(
-  CreateDictionaryNotifier.new,
+final editDictionaryNotifierProvider = AsyncNotifierProvider.autoDispose.family(
+  EditDictionaryNotifier.new,
 );
 
 final dictionaryNotifierProvider = StreamNotifierProvider.autoDispose(

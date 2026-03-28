@@ -153,20 +153,6 @@ class RepeatScreen extends ConsumerWidget {
       ],
     );
   }
-
-  /*   PopupMenuItem _buildMenuIconItem({
-    required IconData icon,
-    required String label,
-  }) {
-    return PopupMenuItem(
-      child: Row(
-        crossAxisAlignment: .end,
-        mainAxisAlignment: .start,
-        spacing: 16,
-        children: [Icon(size: 18, icon), Text(label)],
-      ),
-    );
-  } */
 }
 
 class InfoChip extends StatelessWidget {

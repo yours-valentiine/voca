@@ -11,10 +11,14 @@ import 'package:voca/shared/util/object_helper.dart';
 
 // TODO: Localize error message
 class DictionaryRepository {
+  // #region DI classes
+
   final DictionaryDao dictionaryDao;
   final WordDao wordDao;
   final TranslateDao translateDao;
   final WordFullDao wordFullDao;
+
+  // #endregion
 
   DictionaryRepository({
     required this.wordDao,
@@ -24,6 +28,8 @@ class DictionaryRepository {
   });
 
   // #region Work with Dictionary
+
+  /// Creates a new dictionary in the database and returns its id
   Future<UuidValue> addSingleDictionary(DictionaryModel dictionary) async {
     final data = DictionaryEntityCompanion(
       dictionaryId: Value(dictionary.dictionaryId.toBytes()),
@@ -35,11 +41,19 @@ class DictionaryRepository {
     return UuidValue.fromByteList(inserted.dictionaryId);
   }
 
+  /// Returns the number of user dictionaries
+  Future<int> getCount() async {
+    final data = await dictionaryDao.getAll();
+    return data.length;
+  }
+
+  /// Returns the dictionary whose id is passed to the method.
+  /// If the dictionary is not in the database,
+  /// it throws a [DictionaryNotFound] exception.
   Future<DictionaryModel> getSingleDictionary(UuidValue id) async {
     final data = await dictionaryDao.getSingle(id.toBytes());
 
     if (data case null) {
-      // TODO
       throw DictionaryNotFound(message: "dictionary with $id not found");
     }
 
@@ -49,11 +63,13 @@ class DictionaryRepository {
     );
   }
 
-  Future<DictionaryModel> getFirstDictionary() async {
+  /// Returns the last modified record in the database.
+  /// If there are no records in the database,
+  /// it throws a [DictionaryNotFound] exception.
+  Future<DictionaryModel> getLastUpdatedDictionary() async {
     final data = await dictionaryDao.getSingleOrNull();
 
     if (data case null) {
-      // TODO
       throw DictionaryNotFound(message: "dictionary table is empty");
     }
 
@@ -63,6 +79,11 @@ class DictionaryRepository {
     );
   }
 
+  /// Deletes the dictionary with the given id from the database.
+  Future<void> deleteSingleDictionary(UuidValue dictionaryId) async =>
+      await dictionaryDao.deleteSingle(dictionaryId.toBytes());
+
+  /// Returns a list of all user dictionaries in [Stream].
   Stream<List<DictionaryModel>> getAllDictionary() =>
       dictionaryDao.watchAll().map((list) {
         var newData = <DictionaryModel>[];
@@ -76,9 +97,13 @@ class DictionaryRepository {
         }
         return newData;
       });
+
   // #endregion
 
   // #region Work with Word
+
+  /// Returns the word with the given wordId.
+  /// If the word is not found, it returns null.
   Future<WordModel?> getSingleWord(UuidValue wordId) async {
     final data = await wordFullDao.getSingle(wordId.toBytes());
 
@@ -112,6 +137,8 @@ class DictionaryRepository {
     return word;
   }
 
+  /// Returns a list of words for the given dictionary in [Stream] format.
+  /// The list may be empty.
   Stream<List<WordModel>> watchForDictionary(UuidValue dictionaryId) =>
       wordFullDao.watchForDictionary(dictionaryId.toBytes()).map((data) {
         final mapOfWords = <UuidValue, WordModel>{};
@@ -147,12 +174,13 @@ class DictionaryRepository {
         return mapOfWords.values.toList();
       });
 
-  Future<void> addSingleWord(WordModel word) async {
+  /// Adds a new word or updates an old word.
+  Future<void> upsertSingleWord(WordModel word) async {
     await wordFullDao.attachedDatabase.transaction(() async {
       late final WordEntityData savedWord;
       /*
-       * If word's id is null, then insert into table.
-       * Else update
+       * If wordId is null, then insert into table.
+       * Else update.
        */
       if (word.wordId == null) {
         final newWord = WordEntityCompanion.insert(
@@ -208,9 +236,8 @@ class DictionaryRepository {
     });
   }
 
-  Future<void> deleteSingle(UuidValue wordId) async {
-    await wordDao.deleteSingle(wordId.toBytes());
-  }
+  Future<void> deleteSingleWord(UuidValue wordId) async =>
+      await wordDao.deleteSingle(wordId.toBytes());
 
   // #endregion
 }

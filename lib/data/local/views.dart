@@ -77,7 +77,7 @@ abstract class WordRepeatFull extends View {
       select([
         words.wordId,
         words.word,
-        words.createdAt,
+        words.updatedAt,
         words.dictionaryId,
         translates.translateId,
         translates.translate,

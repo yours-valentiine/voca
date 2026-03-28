@@ -6,7 +6,7 @@ class DictionaryEntity extends Table {
   BlobColumn get dictionaryId =>
       blob().clientDefault(() => generateUuid().toBytes())();
   TextColumn get name => text()();
-  DateTimeColumn get createdAt =>
+  DateTimeColumn get updatedAt =>
       dateTime().clientDefault(() => DateTime.timestamp())();
 
   @override
@@ -32,7 +32,7 @@ class WordEntity extends Table {
     onDelete: .cascade,
     onUpdate: .cascade,
   )();
-  DateTimeColumn get createdAt =>
+  DateTimeColumn get updatedAt =>
       dateTime().clientDefault(() => DateTime.timestamp())();
 
   @override
@@ -58,7 +58,7 @@ class TranslateEntity extends Table {
     onUpdate: .cascade,
   )();
   IntColumn get position => integer()();
-  DateTimeColumn get createdAt =>
+  DateTimeColumn get updatedAt =>
       dateTime().clientDefault(() => DateTime.timestamp())();
 
   @override

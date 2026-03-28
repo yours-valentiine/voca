@@ -1,8 +1,9 @@
 enum Routes {
   dictionary("/dictionary"),
+  editDictionary("/edit-dictionary"),
   exercises("/exercises"),
-  word("/word/:id"),
-  editWord("/edit-word/:id"),
+  word("/word"),
+  editWord("/edit-word"),
   spacedRepetition("/spaced-repetition"),
   settings("/settings");
 

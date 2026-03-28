@@ -43,9 +43,10 @@ class DictionaryScreen extends ConsumerWidget {
             AsyncData(value: final data) => _buildDictionary(
               context,
               data,
-              onCardTap: (wordId) => context.push(Routes.word.withId(wordId)),
+              onCardTap: (wordId) =>
+                  context.push(Routes.word.location, extra: wordId),
               onEditTap: (wordId) =>
-                  context.push(Routes.editWord.withId(wordId)),
+                  context.push(Routes.editWord.location, extra: wordId),
               onDeleteTap: (wordId) async => notifier.deleteWord(wordId),
             ),
           },

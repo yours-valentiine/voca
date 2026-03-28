@@ -49,7 +49,7 @@ class SpacedRepetitionNotifier extends AsyncNotifier<SpacedRepetitionData> {
     required Rating rating,
   }) async {
     final fsrsCard = Card(
-      cardId: card.createdAt.millisecondsSinceEpoch,
+      cardId: card.updatedAt.millisecondsSinceEpoch,
       state: card.state ?? State.learning,
       step: card.step,
       stability: card.stability,

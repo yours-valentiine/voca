@@ -22,7 +22,8 @@ class WordScreen extends ConsumerWidget {
           IconButton(
             onPressed: () async {
               final isRefresh = await context.push<bool>(
-                Routes.editWord.withId(wordId),
+                Routes.editWord.location,
+                extra: wordId,
               );
 
               if (isRefresh ?? false) {
@@ -103,37 +104,6 @@ class WordScreen extends ConsumerWidget {
         ),
       ),
     );
-
-    /*     return CustomScrollView(
-      slivers: [
-        SliverAppBar(automaticallyImplyLeading: true),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          sliver: state.when(
-            data: (data) {
-              return SliverCrossAxisGroup(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Card(
-                      elevation: 0,
-                      margin: const EdgeInsets.all(0),
-                      child: Text(data.word),
-                    ),
-                  ),
-                ],
-              );
-            },
-            error: (error, stackTrace) => SliverFillRemaining(
-              child: Center(child: Text(error.toString())),
-            ),
-            loading: () => SliverFillRemaining(
-              hasScrollBody: false,
-              child: Center(child: CircularProgressIndicator()),
-            ),
-          ),
-        ),
-      ],
-    ); */
   }
 }
 

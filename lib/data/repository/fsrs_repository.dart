@@ -36,7 +36,7 @@ class FsrsRepository {
         () => RepeatWordModel(
           wordId: UuidValue.fromByteList(row.wordId),
           word: row.word,
-          createdAt: row.createdAt,
+          updatedAt: row.updatedAt,
           dictionaryId: dictionaryId,
           translates: [],
           due: row.due,

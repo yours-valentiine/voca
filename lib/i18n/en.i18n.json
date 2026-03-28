@@ -45,7 +45,17 @@
             }
         },
         "backup": {
-            "title": "Backup"
+            "title": "Backup",
+            "export": {
+                "title":"Data export",
+                "description": "Back up your data",
+                "success": "Data exported"
+            },
+            "import": {
+                "title": "Data import",
+                "description": "Load previously saved data.",
+                "success": "Data imported"
+            }
         },
         "other": {
             "title": "Other",

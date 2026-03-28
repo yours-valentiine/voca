@@ -13,7 +13,7 @@ class DictionaryDao extends DatabaseAccessor<VocaDatabase>
 
   Future<DictionaryEntityData?> getSingleOrNull() =>
       (select(dictionaryEntity)
-            ..orderBy([(d) => OrderingTerm.asc(d.createdAt)])
+            ..orderBy([(d) => OrderingTerm.asc(d.updatedAt)])
             ..limit(1))
           .getSingleOrNull();
 
@@ -25,19 +25,25 @@ class DictionaryDao extends DatabaseAccessor<VocaDatabase>
 
   Future<List<DictionaryEntityData>> getAll() => (select(
     dictionaryEntity,
-  )..orderBy([(d) => OrderingTerm.asc(d.createdAt)])).get();
+  )..orderBy([(d) => OrderingTerm.asc(d.updatedAt)])).get();
 
   Stream<List<DictionaryEntityData>> watchAll() => (select(
     dictionaryEntity,
-  )..orderBy([(d) => OrderingTerm.asc(d.createdAt)])).watch();
+  )..orderBy([(d) => OrderingTerm.asc(d.updatedAt)])).watch();
 
   Future<DictionaryEntityData> addSingle(DictionaryEntityCompanion data) =>
       into(dictionaryEntity).insertReturning(data, mode: .insertOrReplace);
+
+  Future<void> deleteSingle(Uint8List dictionaryId) => (delete(
+    dictionaryEntity,
+  )..where((d) => d.dictionaryId.equals(dictionaryId))).go();
 }
 
 @DriftAccessor(tables: [WordEntity])
 class WordDao extends DatabaseAccessor<VocaDatabase> with _$WordDaoMixin {
   WordDao(super.attachedDatabase);
+
+  Future<List<WordEntityData>> getAll() => select(wordEntity).get();
 
   Future<WordEntityData> upsertSingle(WordEntityCompanion data) =>
       into(wordEntity).insertReturning(data, mode: .insertOrReplace);
@@ -50,6 +56,8 @@ class WordDao extends DatabaseAccessor<VocaDatabase> with _$WordDaoMixin {
 class TranslateDao extends DatabaseAccessor<VocaDatabase>
     with _$TranslateDaoMixin {
   TranslateDao(super.attachedDatabase);
+
+  Future<List<TranslateEntityData>> getAll() => select(translateEntity).get();
 
   Future<List<TranslateEntityData>> getByWordId(Uint8List wordId) =>
       (select(translateEntity)..where((t) => t.wordId.equals(wordId))).get();
@@ -73,6 +81,8 @@ class TranslateDao extends DatabaseAccessor<VocaDatabase>
 @DriftAccessor(tables: [FsrsEntity, FsrsHistoryEntity])
 class FsrsDao extends DatabaseAccessor<VocaDatabase> with _$FsrsDaoMixin {
   FsrsDao(super.attachedDatabase);
+
+  Future<List<FsrsEntityData>> getAll() => select(fsrsEntity).get();
 
   Future<void> addSingle(
     FsrsEntityCompanion newFsrs, {

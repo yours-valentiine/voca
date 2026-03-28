@@ -10,7 +10,7 @@ class RepeatWordModel with _$RepeatWordModel {
   const RepeatWordModel({
     required this.wordId,
     required this.word,
-    required this.createdAt,
+    required this.updatedAt,
     required this.dictionaryId,
     required this.translates,
     required this.due,
@@ -23,7 +23,7 @@ class RepeatWordModel with _$RepeatWordModel {
 
   final UuidValue wordId;
   final String word;
-  final DateTime createdAt;
+  final DateTime updatedAt;
   final UuidValue dictionaryId;
   final List<TranslateModel> translates;
   final DateTime? due;

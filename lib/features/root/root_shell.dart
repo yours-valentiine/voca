@@ -1,94 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_context_menu/flutter_context_menu.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voca/config/dependecies.dart';
-import 'package:voca/features/create_dictionary/create_dictionary_dialog.dart';
 import 'package:voca/features/repeat/repeat_notifier.dart';
 import 'package:voca/router/navigation.dart';
 import 'package:voca/router/routes.dart';
 import 'package:voca/shared/util/context_helpers.dart';
-
-/* class HomeShell extends ConsumerWidget {
-  const HomeShell({super.key, required this.navigationShell});
-
-  final StatefulNavigationShell navigationShell;
-
-  Widget _buildBadge({required AsyncValue<int> value, required Widget icon}) {
-    return value.when(
-      data: (value) {
-        return Badge(
-          isLabelVisible: value > 0,
-          label: value > 0 ? Text(value.toString()) : null,
-          child: icon,
-        );
-      },
-      error: (error, stackTrace) => icon,
-      loading: () => icon,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final reviewCountStream = ref.watch(reviewCountProvider);
-
-    final destinations = [
-      NavigationDestination(
-        icon: const Icon(Icons.book_outlined),
-        selectedIcon: const Icon(Icons.book),
-        label: localization(context).dictionaryTitle,
-      ),
-      NavigationDestination(
-        icon: _buildBadge(
-          value: reviewCountStream,
-          icon: Icon(Icons.repeat_outlined),
-        ),
-        selectedIcon: const Icon(Icons.repeat),
-        label: localization(context).repeatTitle,
-      ),
-    ];
-
-    final currentIndex = navigationShell.currentIndex;
-
-    final showFab = currentIndex == 0;
-
-    return ScaffoldWithNavigation(
-      destinations: destinations,
-      selectedIndex: currentIndex,
-      onDestinationSelected: (value) => navigationShell.goBranch(value),
-      floatingActionButton: showFab ? _buildFab(context) : null,
-      fabSlot: _buildFab(context, isSlot: true),
-      fabExtendedSlot: _buildFab(context, isExtended: true, isSlot: true),
-      body: navigationShell,
-    );
-  }
-
-  void _openEditDialog(BuildContext context) async {
-    await showResponsiveDialog(
-      context: context,
-      content: EditWordDialog(wordId: null),
-    );
-  }
-
-  Widget _buildFab(
-    BuildContext context, {
-    bool isExtended = false,
-    bool isSlot = false,
-  }) {
-    return isExtended
-        ? FloatingActionButton.extended(
-            onPressed: () => _openEditDialog(context),
-            icon: const Icon(Icons.add),
-            label: Text(localization(context).newWordTitle),
-            elevation: isSlot ? 0 : null,
-          )
-        : FloatingActionButton(
-            onPressed: () => _openEditDialog(context),
-            elevation: isSlot ? 0 : null,
-            child: const Icon(Icons.add),
-          );
-  }
-}
- */
 
 class RootShell extends ConsumerWidget {
   const RootShell({super.key, required this.navigationShell});
@@ -129,11 +47,11 @@ class RootShell extends ConsumerWidget {
       floatingActionButton: switch (navigationShell.currentIndex) {
         0 => FloatingActionButton(
           onPressed: () {
-            context.push(Routes.editWord.withId(null));
+            context.push(Routes.editWord.location, extra: null);
           },
           child: const Icon(Icons.add),
         ),
-        int() => null,
+        _ => null,
       },
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
@@ -172,35 +90,61 @@ class RootShell extends ConsumerWidget {
                           itemCount: data.length,
                           itemBuilder: (context, index) {
                             final dictionary = data[index];
-                            return ListTile(
-                              title: Text(dictionary.name),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadiusGeometry.circular(24),
+                            return ContextMenuRegion(
+                              contextMenu: ContextMenu(
+                                entries: <ContextMenuEntry>[
+                                  MenuItem(
+                                    icon: const Icon(Icons.edit_outlined),
+                                    label: Text(
+                                      translations(context).base.edit,
+                                    ),
+                                    onSelected: (value) {
+                                      context.push(
+                                        Routes.editDictionary.location,
+                                        extra: dictionary.dictionaryId,
+                                      );
+                                    },
+                                  ),
+                                  MenuItem(
+                                    icon: const Icon(Icons.delete_outline),
+                                    label: Text(
+                                      translations(context).base.delete,
+                                    ),
+                                    onSelected: (_) async => await idNotifier
+                                        .deleteSingle(dictionary.dictionaryId),
+                                  ),
+                                ],
                               ),
-                              onTap: () async {
-                                await idNotifier.changeCurrent(
-                                  dictionary.dictionaryId,
-                                );
+                              child: ListTile(
+                                title: Text(dictionary.name),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadiusGeometry.circular(
+                                    24,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  await idNotifier.changeCurrent(
+                                    dictionary.dictionaryId,
+                                  );
 
-                                if (context.mounted) context.pop();
-                              },
-                              selected: dictionary == currentId.value,
-                              selectedTileColor: colorScheme(
-                                context,
-                              ).primaryContainer,
-                              selectedColor: colorScheme(
-                                context,
-                              ).onPrimaryContainer,
+                                  if (context.mounted) context.pop();
+                                },
+                                selected: dictionary == currentId.value,
+                                selectedTileColor: colorScheme(
+                                  context,
+                                ).primaryContainer,
+                                selectedColor: colorScheme(
+                                  context,
+                                ).onPrimaryContainer,
+                              ),
                             );
                           },
                         ),
                         TextButton(
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CreateDictionaryDialog();
-                              },
+                            context.push(
+                              Routes.editDictionary.location,
+                              extra: null,
                             );
                           },
                           child: Text(translations(context).menu.create.button),

@@ -1,3 +1,3 @@
 import 'package:uuid/uuid.dart';
 
-UuidValue generateUuid() => UuidValue.fromString(Uuid().v7());
+UuidValue generateUuid() => Uuid().v7obj();

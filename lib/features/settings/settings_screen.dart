@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -78,11 +79,21 @@ class SettingsScreen extends ConsumerWidget {
             children: [
               ListTile(
                 leading: const Icon(Icons.upload_file),
-                title: Text("Export data"),
+                title: Text(translations(context).settings.backup.export.title),
+                subtitle: Text(
+                  translations(context).settings.backup.export.description,
+                ),
+                onTap: () async =>
+                    await _export(context, onFileLoad: notifier.exportData),
               ),
               ListTile(
                 leading: const Icon(Icons.save_alt),
-                title: Text("Import data"),
+                title: Text(translations(context).settings.backup.import.title),
+                subtitle: Text(
+                  translations(context).settings.backup.import.description,
+                ),
+                onTap: () async =>
+                    await _import(context, onFileLoad: notifier.importData),
               ),
             ],
           ),
@@ -104,9 +115,8 @@ class SettingsScreen extends ConsumerWidget {
 
   void _aboutVocaShow(BuildContext context) => showAboutDialog(
     context: context,
-    applicationIcon: const FlutterLogo(size: 100),
     applicationName: "Voca",
-    applicationVersion: "v0.0.1-dev.1",
+    applicationVersion: "v.0.0.1-dev.2",
     applicationLegalese: "\u00a9 2026 yours.valentiine",
     children: [
       const SizedBox(height: 12),
@@ -121,6 +131,57 @@ class SettingsScreen extends ConsumerWidget {
       ),
     ],
   );
+
+  Future<void> _export(
+    BuildContext context, {
+    required Future Function(String) onFileLoad,
+  }) async {
+    final out = await FilePicker.platform.saveFile(
+      dialogTitle: translations(context).settings.backup.export.title,
+      fileName: "backup.zip",
+      type: .custom,
+      allowedExtensions: ["zip"],
+    );
+
+    if (out == null) return;
+
+    await onFileLoad(out);
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          dismissDirection: .horizontal,
+          duration: Durations.long4,
+          content: Text(translations(context).settings.backup.export.success),
+          behavior: .floating,
+        ),
+      );
+    }
+  }
+
+  Future<void> _import(
+    BuildContext context, {
+    required Future Function(String) onFileLoad,
+  }) async {
+    final file = await FilePicker.platform.pickFiles(
+      type: .custom,
+      allowedExtensions: ["zip"],
+    );
+
+    if (file == null) return;
+
+    await onFileLoad(file.files.first.path!);
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Durations.long4,
+          behavior: .floating,
+          content: Text(translations(context).settings.backup.import.success),
+        ),
+      );
+    }
+  }
 }
 
 class SettingsSection extends StatelessWidget {

@@ -253,12 +253,6 @@ class TranslateBlock extends StatelessWidget {
         ),
         const SizedBox(width: 2),
         IconButton(onPressed: onDeleteTap, icon: const Icon(Icons.close)),
-        /* IconButtonM3E(
-          size: .xs,
-          width: .narrow,
-          onPressed: onDeleteTap,
-          icon: const Icon(Icons.close),
-        ), */
       ],
     );
   }

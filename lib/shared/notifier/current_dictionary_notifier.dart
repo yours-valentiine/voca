@@ -25,7 +25,7 @@ class CurrentDictionaryNotifier extends AsyncNotifier<DictionaryModel> {
     var storedId = _preferences.getDictionaryId;
 
     if (storedId case null) {
-      final fromDb = await _dictionaryRepository.getFirstDictionary();
+      final fromDb = await _dictionaryRepository.getLastUpdatedDictionary();
       await _preferences.setDictionaryId(fromDb.dictionaryId);
       return fromDb;
     } else {
@@ -34,8 +34,10 @@ class CurrentDictionaryNotifier extends AsyncNotifier<DictionaryModel> {
   }
 
   Future<void> refreshLocal() async {
-    final fromDb = await _dictionaryRepository.getFirstDictionary();
+    final fromDb = await _dictionaryRepository.getLastUpdatedDictionary();
     await _preferences.setDictionaryId(fromDb.dictionaryId);
+
+    state = AsyncValue.data(fromDb);
   }
 
   Future<void> changeCurrent(UuidValue dictionaryId) async {
@@ -46,6 +48,24 @@ class CurrentDictionaryNotifier extends AsyncNotifier<DictionaryModel> {
 
       await _preferences.setDictionaryId(dictionaryId);
       state = AsyncValue.data(newModel);
+    } catch (err, stackTrace) {
+      state = AsyncValue.error(err, stackTrace);
+    }
+  }
+
+  Future<void> deleteSingle(UuidValue dictionaryId) async {
+    try {
+      if (await _dictionaryRepository.getCount() <= 1) {
+        return;
+      }
+
+      final currentState = state.requireValue;
+
+      await _dictionaryRepository.deleteSingleDictionary(dictionaryId);
+
+      if (currentState.dictionaryId == dictionaryId) {
+        await refreshLocal();
+      }
     } catch (err, stackTrace) {
       state = AsyncValue.error(err, stackTrace);
     }
