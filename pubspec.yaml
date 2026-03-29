@@ -1,5 +1,5 @@
 name: voca
-description: "A new Flutter project."
+description: "An app for learning foreign languages"
 publish_to: "none"
 version: 0.1.0-alpha.1
 
@@ -38,7 +38,6 @@ dev_dependencies:
   freezed: ^3.2.5
   slang_build_runner: ^4.14.0
   json_serializable: ^6.13.1
-  msix: ^3.16.13
   flutter_launcher_icons: ^0.14.4
 
 flutter:

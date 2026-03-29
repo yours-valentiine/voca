@@ -122,14 +122,6 @@ class SettingsScreen extends ConsumerWidget {
     children: [
       const SizedBox(height: 12),
       Text("Made with \u2764 and Flutter"),
-      Text.rich(
-        TextSpan(
-          children: [
-            TextSpan(text: "For support: "),
-            TextSpan(text: "something@mail.ru"),
-          ],
-        ),
-      ),
     ],
   );
 
