@@ -38,4 +38,7 @@ class RepeatWordModel with _$RepeatWordModel {
   final State? state;
   final int? step;
   final DateTime? lastReview;
+
+  String get formattedTranslates =>
+      translates.map((t) => t.translate).join('; ');
 }

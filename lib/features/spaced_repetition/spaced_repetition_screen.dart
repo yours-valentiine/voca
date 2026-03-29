@@ -217,7 +217,7 @@ class _SpacedRepetitionScreenState
                     crossAxisAlignment: .start,
                     children: [
                       Text(card.word, style: typography(context).titleMedium),
-                      Text(card.translates.first.translate),
+                      Text(card.formattedTranslates),
                       if (isCorrect)
                         Column(
                           crossAxisAlignment: .center,
