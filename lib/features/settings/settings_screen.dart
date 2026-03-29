@@ -115,6 +115,7 @@ class SettingsScreen extends ConsumerWidget {
 
   void _aboutVocaShow(BuildContext context) => showAboutDialog(
     context: context,
+    applicationIcon: Image.asset("assets/icon/icon.png", height: 100, width: 100),
     applicationName: "Voca",
     applicationVersion: "v.0.1.0-alpha.1",
     applicationLegalese: "\u00a9 2026 yours.valentiine",

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46667 135.46667"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title1">Voca</title>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.86363413"
+     inkscape:cx="295.84287"
+     inkscape:cy="338.68509"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:clip-to-page="false">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.26458333"
+       spacingy="0.26458333"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient3"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#fcf6e8;stop-opacity:1;"
+         offset="0"
+         id="stop3" />
+      <stop
+         style="stop-color:#fcf6e8;stop-opacity:0;"
+         offset="1"
+         id="stop6" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <linearGradient
+       id="linearGradient4"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop5" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4"
+       id="linearGradient5"
+       x1="2.3945582"
+       y1="8.417511"
+       x2="4.3776345"
+       y2="8.417511"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3"
+       id="linearGradient6"
+       x1="-14.082578"
+       y1="11.88962"
+       x2="-3.3077345"
+       y2="11.88962"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="background"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="scale(10.666668)">
+    <path
+       id="rect1"
+       style="fill:#8faa8e;fill-opacity:1;stroke-width:0;stroke-linejoin:round"
+       inkscape:label="back"
+       d="M 0,0 H 12.699999 V 12.699999 H 0 Z" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="foreground"
+     transform="scale(10.666668)">
+    <path
+       d="m 3.8844621,10.402078 q -1.8634649,1.60258 -3.83873772,2.198889 L -0.2896993,11.706503 Q 1.6855735,11.147464 3.250884,9.8057692 1.9464586,8.3895359 1.499227,6.526071 H -0.2896993 V 5.8179544 H 3.2881533 V 4.401721 h 0.8199246 q 0.3726929,0.074539 0.037269,0.2981544 v 1.118079 H 7.7604691 V 6.526071 H 6.0088121 Q 5.7106577,8.277728 4.4435015,9.8057692 5.747927,10.961117 7.9095463,11.520157 L 7.5741226,12.41462 Q 5.6733884,11.930119 3.8844621,10.402078 Z M 3.8471928,9.2094605 Q 4.9652717,7.8677657 5.2261568,6.526071 H 2.3191516 q 0.2236157,1.2671561 1.5280412,2.6833895 z"
+       id="text3"
+       style="font-size:9.54094px;fill:#fef9f0;stroke:#fef9f0;stroke-width:1.3691;stroke-linecap:round;stroke-linejoin:round"
+       inkscape:label="body"
+       aria-label="文"
+       transform="matrix(0.99345518,-0.33378624,0.30389333,0.90448427,0,0)" />
+    <ellipse
+       style="fill:#2c2e2a;stroke:none;stroke-width:1.53788;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;paint-order:normal"
+       id="path1-8"
+       cx="6.7254071"
+       cy="5.0620646"
+       rx="0.71394557"
+       ry="1.0127966"
+       transform="matrix(0.99955897,-0.02969616,0.15222357,0.98834609,0,0)" />
+    <ellipse
+       style="fill:#2c2e2a;stroke:none;stroke-width:1.53788;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;paint-order:normal"
+       id="path1-8-6"
+       cx="3.5885518"
+       cy="5.9951844"
+       rx="0.71394557"
+       ry="1.0127966"
+       transform="matrix(0.99955897,-0.02969616,0.15222357,0.98834609,0,0)" />
+  </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/" />
+        <dc:title>Voca</dc:title>
+        <dc:date>29.03.2026</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>yours.valentiine</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>voca</rdf:li>
+            <rdf:li>language</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:identifier>voca-app-logo</dc:identifier>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:prohibits
+           rdf:resource="http://creativecommons.org/ns#CommercialUse" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
