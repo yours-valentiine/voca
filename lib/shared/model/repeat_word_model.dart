@@ -1,3 +1,9 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+// repeat_word_model.dart
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fsrs/fsrs.dart' show State;
 import 'package:uuid/uuid.dart';
