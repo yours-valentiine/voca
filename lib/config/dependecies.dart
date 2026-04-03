@@ -4,6 +4,7 @@
 
 // dependecies.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:voca/features/updating/updating_notifier.dart';
 import 'package:voca/shared/service/backup/backup_service.dart';
 import 'package:voca/data/local/daos.dart';
 import 'package:voca/data/local/database.dart';
@@ -17,7 +18,8 @@ import 'package:voca/features/spaced_repetition/spaced_repetition_notifier.dart'
 import 'package:voca/features/word/word_notifier.dart';
 import 'package:voca/shared/notifier/current_dictionary_notifier.dart';
 import 'package:voca/data/repository/dictionary_repository.dart';
-import 'package:voca/shared/service/voca_preferences.dart';
+import 'package:voca/shared/service/updater/updater_service.dart';
+import 'package:voca/shared/service/preferences/voca_preferences.dart';
 
 // #region Local database
 final databaseProvider = Provider<VocaDatabase>((ref) => VocaDatabase());
@@ -80,6 +82,10 @@ final backupServiceProvider = Provider<BackupService>(
   ),
 );
 
+final updaterServiceProvider = Provider<UpdaterService>(
+  (ref) => UpdaterService(settings: ref.watch(vocaSettingsProvider)),
+);
+
 // #endregion
 
 // #region NOTIFIERS
@@ -114,5 +120,9 @@ final editWordNotifierProvider = AsyncNotifierProvider.autoDispose.family(
 
 final spacedRepetitionNotifierProvider = AsyncNotifierProvider.autoDispose(
   SpacedRepetitionNotifier.new,
+);
+
+final updatingNotifierProvider = NotifierProvider.autoDispose.family(
+  UpdatingNotifier.new,
 );
 // #endregion

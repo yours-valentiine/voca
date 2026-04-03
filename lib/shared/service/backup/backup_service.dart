@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:uuid/parsing.dart';
 import 'package:voca/shared/service/backup/models/backup_dictionary.dart';
 import 'package:voca/shared/service/backup/models/backup_fsrs.dart';
@@ -51,7 +52,7 @@ class BackupService {
       final metadata = BackupMetadata(
         version: 1,
         exportDate: DateTime.now().toIso8601String(),
-        appVersion: "1.0.0-dev.1",
+        appVersion: (await PackageInfo.fromPlatform()).version,
       );
 
       final metadataFile = File("${exportDir.path}/metadata.json");
@@ -199,39 +200,6 @@ class BackupService {
       }
     });
   }
-
-  /* Future<void> _importWithStrategic<E extends Table, D>(
-    List<dynamic> jsonList,
-    ImportStrategic strategic,
-    TableInfo<E, D> table,
-    Insertable<D> Function(dynamic) toModel, {
-    Expression<bool> Function(E old, E excluded)? merge,
-    List<Column>? target = const [],
-    bool useInsertAllOnConflictUpdate = false,
-  }) async {
-    await vocaDatabase.batch((b) async {
-      final data = jsonList.map(toModel).toList();
-
-      switch (strategic) {
-        case ImportStrategic.merge:
-          for (final row in data) {
-            b.insert(
-              table,
-              row,
-              onConflict: DoUpdate.withExcluded(
-                (E old, E excluded) => row,
-                target: target,
-                where: merge,
-              ),
-            );
-          }
-        case ImportStrategic.replace:
-          b.insertAll(table, data, mode: .insertOrReplace);
-        case ImportStrategic.skip:
-          b.insertAll(table, data, mode: .insertOrIgnore);
-      }
-    });
-  } */
 }
 
 enum BackupTables { dictionary, word, translate, fsrs }

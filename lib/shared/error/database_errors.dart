@@ -3,21 +3,21 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // errors.dart
-abstract class VocaError implements Exception {
+sealed class DatabaseError implements Exception {
   final String message;
 
-  VocaError({required this.message});
+  DatabaseError({required this.message});
 }
 
-class WordNotFound extends VocaError {
-  WordNotFound({required super.message});
+class WordNotFoundError extends DatabaseError {
+  WordNotFoundError({required super.message});
 
   @override
   String toString() => "Word not found: $message";
 }
 
-class DictionaryNotFound extends VocaError {
-  DictionaryNotFound({required super.message});
+class DictionaryNotFoundError extends DatabaseError {
+  DictionaryNotFoundError({required super.message});
 
   @override
   String toString() => "Dictionary not found: $message";

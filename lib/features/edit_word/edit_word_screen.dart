@@ -8,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid_value.dart';
 import 'package:voca/config/dependecies.dart';
+import 'package:voca/features/edit_word/edit_word_notifier.dart';
+import 'package:voca/shared/model/translate_model.dart';
 import 'package:voca/shared/model/word_model.dart';
 import 'package:voca/shared/util/context_helpers.dart';
 
@@ -28,8 +30,8 @@ class _EditWordScreenState extends ConsumerState<EditWordScreen> {
   final _formKey = GlobalKey<FormState>();
 
   /*
-   *  Синхронизация данных контроллеров с данными в состоянии
-   *  Проверяет данные на заполненность и обновляет контроллеры
+   *  Synchronizing controller data with state data
+   *  Checks data for completeness and updates controllers
    */
   void _syncControllers(WordModel model) {
     if (_wordController.text != model.word) {
@@ -110,6 +112,10 @@ class _EditWordScreenState extends ConsumerState<EditWordScreen> {
             error: (error, stackTrace) => Text(error.toString()),
             data: (data) {
               _syncControllers(data);
+
+              final canAddTranslates =
+                  data.translates.lastOrNull?.translate.isNotEmpty ?? true;
+
               return Form(
                 key: _formKey,
                 child: Column(
@@ -141,49 +147,25 @@ class _EditWordScreenState extends ConsumerState<EditWordScreen> {
                         ),
                       ),
                       controller: _transcriptionController,
-                      textInputAction: data.translates.isNotEmpty
-                          ? .next
-                          : .done,
                       onChanged: notifier.setTranscription,
-                      onEditingComplete: data.translates.isEmpty
-                          ? notifier.appendTranslate
-                          : null,
+                      onEditingComplete: () {
+                        if (data.translates.isEmpty) {
+                          notifier.appendTranslate();
+                          Future.delayed(Duration(milliseconds: 100));
+                        }
+                        FocusScope.of(context).nextFocus();
+                      },
                     ),
                     const SizedBox(height: 18),
                     Column(
                       crossAxisAlignment: .stretch,
                       children: [
-                        ReorderableListView.builder(
-                          header: Text(
-                            translations(context).aboutWord.translates,
-                          ),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          buildDefaultDragHandles: false,
-                          itemCount: data.translates.length,
-                          onReorder: notifier.reorderTranslate,
-                          itemBuilder: (context, index) {
-                            final translate = data.translates[index];
-
-                            return TranslateBlock(
-                              key: ValueKey(translate.translateId),
-                              index: index,
-                              controller:
-                                  _translatesControllers[translate.translateId],
-                              onDeleteTap: () => notifier.removeTranslate(
-                                translate.translateId,
-                              ),
-                              onChanged: (value) => notifier.setTranslate(
-                                translate.translateId,
-                                value,
-                              ),
-                              onLostFocus: () => notifier.clearTranslates(),
-                            );
-                          },
-                        ),
+                        _buildTranslates(context, data.translates, notifier),
                         const SizedBox(height: 12),
                         TextButton(
-                          onPressed: () => notifier.appendTranslate(),
+                          onPressed: canAddTranslates
+                              ? () => notifier.appendTranslate()
+                              : null,
                           child: Text(
                             translations(context).aboutWord.addTranslate,
                           ),
@@ -218,22 +200,57 @@ class _EditWordScreenState extends ConsumerState<EditWordScreen> {
       ),
     );
   }
+
+  Widget _buildTranslates(
+    BuildContext context,
+    List<TranslateModel> translates,
+    EditWordNotifier notifier,
+  ) => ReorderableListView.builder(
+    header: Text(translations(context).aboutWord.translates),
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    buildDefaultDragHandles: false,
+    itemCount: translates.length,
+    onReorder: notifier.reorderTranslate,
+    itemBuilder: (context, index) {
+      final translate = translates[index];
+
+      return TranslateBlock(
+        key: ValueKey(translate.translateId),
+        index: index,
+        controller: _translatesControllers[translate.translateId],
+        onDeleteTap: () => notifier.removeTranslate(translate.translateId),
+        onChanged: (value) =>
+            notifier.setTranslate(translate.translateId, value),
+        onEditingComplete: () {
+          if (translates.length - 1 == index) {
+            notifier.appendTranslate();
+          }
+          Future.delayed(Duration(milliseconds: 100));
+          FocusScope.of(context).nextFocus();
+        },
+        autofocus: translate.translate.isEmpty,
+      );
+    },
+  );
 }
 
 class TranslateBlock extends StatelessWidget {
   final int index;
   final TextEditingController? controller;
-  final void Function(String value)? onChanged;
-  final VoidCallback? onLostFocus;
+  final ValueChanged<String> onChanged;
   final VoidCallback? onDeleteTap;
+  final VoidCallback? onEditingComplete;
+  final bool autofocus;
 
   const TranslateBlock({
     super.key,
     required this.index,
     this.controller,
     this.onDeleteTap,
-    this.onLostFocus,
-    this.onChanged,
+    required this.onChanged,
+    this.onEditingComplete,
+    this.autofocus = false,
   });
 
   @override
@@ -252,8 +269,9 @@ class TranslateBlock extends StatelessWidget {
         Expanded(
           child: TranslateTextField(
             controller: controller,
-            onLostFocus: onLostFocus,
             onChanged: onChanged,
+            onEditingComplete: onEditingComplete,
+            autofocus: autofocus,
           ),
         ),
         const SizedBox(width: 2),
@@ -265,14 +283,16 @@ class TranslateBlock extends StatelessWidget {
 
 class TranslateTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final void Function(String value)? onChanged;
-  final VoidCallback? onLostFocus;
+  final ValueChanged<String> onChanged;
+  final VoidCallback? onEditingComplete;
+  final bool autofocus;
 
   const TranslateTextField({
     super.key,
     this.controller,
-    this.onChanged,
-    this.onLostFocus,
+    required this.onChanged,
+    required this.autofocus,
+    this.onEditingComplete,
   });
 
   @override
@@ -285,17 +305,11 @@ class _TranslateTextFieldState extends State<TranslateTextField> {
   @override
   void initState() {
     super.initState();
-    if (widget.controller != null && widget.controller!.text.isEmpty) {
+    if (widget.controller != null && widget.autofocus) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _focusNode.requestFocus();
       });
     }
-
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus && widget.onLostFocus != null) {
-        widget.onLostFocus!();
-      }
-    });
   }
 
   @override
@@ -320,6 +334,7 @@ class _TranslateTextFieldState extends State<TranslateTextField> {
           ),
           style: typography(context).bodyLarge,
           onChanged: widget.onChanged,
+          onEditingComplete: widget.onEditingComplete,
         ),
       ),
     );

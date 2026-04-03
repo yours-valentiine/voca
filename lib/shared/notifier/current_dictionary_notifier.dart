@@ -8,7 +8,7 @@ import 'package:uuid/uuid_value.dart';
 import 'package:voca/config/dependecies.dart';
 import 'package:voca/shared/model/dictionary_model.dart';
 import 'package:voca/data/repository/dictionary_repository.dart';
-import 'package:voca/shared/service/voca_preferences.dart';
+import 'package:voca/shared/service/preferences/voca_preferences.dart';
 
 class CurrentDictionaryNotifier extends AsyncNotifier<DictionaryModel> {
   late final VocaSettings _preferences = ref.read(vocaSettingsProvider);

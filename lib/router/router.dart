@@ -13,9 +13,11 @@ import 'package:voca/features/repeat/repeat_screen.dart';
 import 'package:voca/features/root/root_shell.dart';
 import 'package:voca/features/settings/settings_screen.dart';
 import 'package:voca/features/spaced_repetition/spaced_repetition_screen.dart';
+import 'package:voca/features/updating/updating_screen.dart';
 import 'package:voca/features/word/word_screen.dart';
 import 'package:voca/router/dialog_page.dart';
 import 'package:voca/router/routes.dart';
+import 'package:voca/shared/service/updater/models/version_model.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -33,7 +35,7 @@ final router = GoRouter(
             GoRoute(
               path: Routes.dictionary.location,
               pageBuilder: (context, state) =>
-                  MaterialPage(child: DictionaryScreen()),
+                  const MaterialPage(child: DictionaryScreen()),
             ),
           ],
         ),
@@ -42,7 +44,7 @@ final router = GoRouter(
             GoRoute(
               path: Routes.exercises.location,
               pageBuilder: (context, state) =>
-                  MaterialPage(child: RepeatScreen()),
+                  const MaterialPage(child: RepeatScreen()),
             ),
           ],
         ),
@@ -79,11 +81,22 @@ final router = GoRouter(
     GoRoute(
       path: Routes.spacedRepetition.location,
       pageBuilder: (context, state) =>
-          MaterialPage(child: SpacedRepetitionScreen()),
+          const MaterialPage(child: SpacedRepetitionScreen()),
     ),
     GoRoute(
       path: Routes.settings.location,
-      pageBuilder: (context, state) => MaterialPage(child: SettingsScreen()),
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: SettingsScreen()),
+    ),
+    GoRoute(
+      path: Routes.updating.location,
+      pageBuilder: (context, state) {
+        final model = state.extra as VersionModel;
+        return MaterialPage(
+          child: UpdatingScreen(model: model),
+          fullscreenDialog: true,
+        );
+      },
     ),
   ],
 );

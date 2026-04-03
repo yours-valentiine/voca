@@ -12,10 +12,15 @@ import 'package:voca/router/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  LocaleSettings.useDeviceLocale();
 
   final container = ProviderContainer();
   await container.read(vocaSettingsProvider).init();
+
+  final storedLocale =
+      container.read(vocaSettingsProvider).getStoredLocale ??
+      await LocaleSettings.useDeviceLocale();
+
+  await LocaleSettings.setLocaleRaw(storedLocale.languageCode);
 
   runApp(
     UncontrolledProviderScope(

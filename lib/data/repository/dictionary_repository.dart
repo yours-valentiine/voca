@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:voca/data/local/daos.dart';
 import 'package:voca/data/local/database.dart';
-import 'package:voca/shared/error/errors.dart';
+import 'package:voca/shared/error/database_errors.dart';
 import 'package:voca/shared/model/dictionary_model.dart';
 import 'package:voca/shared/model/translate_model.dart';
 import 'package:voca/shared/model/word_model.dart';
@@ -49,12 +49,12 @@ class DictionaryRepository {
 
   /// Returns the dictionary whose id is passed to the method.
   /// If the dictionary is not in the database,
-  /// it throws a [DictionaryNotFound] exception.
+  /// it throws a [DictionaryNotFoundError] exception.
   Future<DictionaryModel> getSingleDictionary(UuidValue id) async {
     final data = await dictionaryDao.getSingle(id.toBytes());
 
     if (data case null) {
-      throw DictionaryNotFound(message: "dictionary with $id not found");
+      throw DictionaryNotFoundError(message: "dictionary with $id not found");
     }
 
     return DictionaryModel(
@@ -65,12 +65,12 @@ class DictionaryRepository {
 
   /// Returns the last modified record in the database.
   /// If there are no records in the database,
-  /// it throws a [DictionaryNotFound] exception.
+  /// it throws a [DictionaryNotFoundError] exception.
   Future<DictionaryModel> getLastUpdatedDictionary() async {
     final data = await dictionaryDao.getSingleOrNull();
 
     if (data case null) {
-      throw DictionaryNotFound(message: "dictionary table is empty");
+      throw DictionaryNotFoundError(message: "dictionary table is empty");
     }
 
     return DictionaryModel(
@@ -104,7 +104,7 @@ class DictionaryRepository {
 
   /// Returns the word with the given wordId.
   /// If the word is not found, it returns null.
-  Future<WordModel?> getSingleWord(UuidValue wordId) async {
+  Future<WordModel?> getSingleWordOrNull(UuidValue wordId) async {
     final data = await wordFullDao.getSingle(wordId.toBytes());
 
     if (data.isEmpty) {
@@ -212,6 +212,7 @@ class DictionaryRepository {
       final existingsIds = oldTranslates.map((t) => t.translateId).toSet();
 
       final newItemsIds = word.translates
+          .where((t) => t.translate.isNotEmpty)
           .map((t) => t.translateId.toBytes())
           .toSet();
 
@@ -221,7 +222,9 @@ class DictionaryRepository {
         }
       }
 
-      final newTranslates = word.translates.indexed
+      final newTranslates = word.translates
+          .where((t) => t.translate.isNotEmpty)
+          .indexed
           .map(
             (translate) => TranslateEntityCompanion(
               translateId: Value(translate.$2.translateId.toBytes()),

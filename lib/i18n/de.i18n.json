@@ -5,7 +5,9 @@
     "base": {
         "edit": "Bearbeiten",
         "delete": "Löschen",
-        "cancel": "Abbrechen"
+        "cancel": "Abbrechen",
+        "done": "Erledigt",
+        "confirm": "Bestätigen"
     },
     "root": {
         "dictionary": "Wörterbuch",
@@ -34,7 +36,11 @@
     "settings": {
         "title": "Einstellungen",
         "language": {
-            "title": "Sprache"
+            "title": "Sprache",
+            "change": {
+                "title": "Sprache auswählen",
+                "message": "Die Änderungen werden nach einem Neustart der Anwendung gespeichert"
+            }
         },
         "theme": {
             "title": "Design",
@@ -55,6 +61,23 @@
                 "title": "Daten importieren",
                 "description": "Laden Sie zuvor gespeicherte Daten.",
                 "success": "Daten importiert"
+            }
+        },
+        "updates": {
+            "title": "Aktualisierungen",
+            "prerelease": {
+                "title": "Vorabversionen aktivieren",
+                "description": "Vorabversionen sind instabil und können Fehler enthalten.",
+                "warning(rich)": "${bold(ACHTUNG:)} Vorabversionen sind instabil und können kritische Fehler enthalten. Sind Sie sicher, dass Sie Vorabversionen aktivieren möchten?"
+            },
+            "check": {
+                "title": "Auf Aktualisierungen prüfen",
+                "description": "Nach den neuesten App-Versionen suchen. Serverdaten können verzögert sein.",
+                "message": {
+                    "yourLatest": "Ihre Version ist die neueste",
+                    "newVersion": "Neue Version verfügbar: ${version}",
+                    "update": "Aktualisieren"
+                }
             }
         },
         "other": {
@@ -103,5 +126,24 @@
             },
             "next": "Weiter"
         }
+    },
+    "updating": {
+        "title": "Update herunterladen",
+        "started": {
+            "title": "Die neue Version ist bereit:",
+            "download": "Herunterladen"
+        },
+        "downloading": {
+            "title": "Bitte warten...",
+            "progress": "Download-Fortschritt: ${count} MiB von ${total} MiB"
+        },
+        "ready": {
+            "title": "Die Datei wurde heruntergeladen. Bitte warten Sie, bis die Installation beginnt.",
+            "dialog": {
+                "title": "Installation abbrechen",
+                "content": "Sind Sie sicher, dass Sie die Installation abbrechen möchten? Sie können sie später fortsetzen."
+            }
+        },
+        "errorButton": "Zur Startseite"
     }
 }

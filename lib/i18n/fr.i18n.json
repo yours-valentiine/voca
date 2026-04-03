@@ -5,7 +5,9 @@
     "base": {
         "edit": "Modifier",
         "delete": "Supprimer",
-        "cancel": "Annuler"
+        "cancel": "Annuler",
+        "done": "Fait",
+        "confirm": "Confirmer"
     },
     "root": {
         "dictionary": "Dictionnaire",
@@ -34,7 +36,11 @@
     "settings": {
         "title": "Paramètres",
         "language": {
-            "title": "Langue"
+            "title": "Langue",
+            "change": {
+                "title": "Sélectionnez la langue",
+                "message": "Les modifications seront enregistrées après le redémarrage de l'application"
+            }
         },
         "theme": {
             "title": "Thème",
@@ -55,6 +61,23 @@
                 "title": "Importer les données",
                 "description": "Charger les données précédemment enregistrées.",
                 "success": "Données importées"
+            }
+        },
+        "updates": {
+            "title": "Mises à jour",
+            "prerelease": {
+                "title": "Activer les pré-versions",
+                "description": "Les pré-versions sont instables et peuvent contenir des bugs.",
+                "warning(rich)": "${bold(ATTENTION:)} Les pré-versions sont instables et peuvent contenir des bugs critiques. Voulez-vous vraiment activer les pré-versions ?"
+            },
+            "check": {
+                "title": "Vérifier les mises à jour",
+                "description": "Rechercher les dernières versions de l'application. Les données du serveur peuvent être différées.",
+                "message": {
+                    "yourLatest": "Votre version est la plus récente",
+                    "newVersion": "Nouvelle version disponible: ${version}",
+                    "update": "Mettre à jour"
+                }
             }
         },
         "other": {
@@ -103,5 +126,24 @@
             },
             "next": "Suivant"
         }
+    },
+    "updating": {
+        "title": "Télécharger la mise à jour",
+        "started": {
+            "title": "La nouvelle version est prête :",
+            "download": "Télécharger"
+        },
+        "downloading": {
+            "title": "Veuillez patienter...",
+            "progress": "Progression du téléchargement : ${count} Mio sur ${total} Mio"
+        },
+        "ready": {
+            "title": "Le fichier a été téléchargé. Veuillez attendre le début de l'installation.",
+            "dialog": {
+                "title": "Annuler l'installation",
+                "content": "Êtes-vous sûr de vouloir annuler l'installation ? Vous pourrez la reprendre plus tard."
+            }
+        },
+        "errorButton": "Accueil"
     }
 }

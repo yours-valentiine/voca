@@ -11,32 +11,52 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:voca/config/dependecies.dart';
 import 'package:voca/shared/service/backup/backup_service.dart';
 import 'package:voca/i18n/strings.g.dart';
-import 'package:voca/shared/service/voca_preferences.dart';
+import 'package:voca/shared/service/updater/models/version_model.dart';
+import 'package:voca/shared/service/updater/updater_service.dart';
+import 'package:voca/shared/service/preferences/voca_preferences.dart';
 
 part 'settings_notifier.freezed.dart';
 
 class SettingsNotifier extends Notifier<SettingsData> {
   late final VocaSettings _settings = ref.watch(vocaSettingsProvider);
   late final BackupService _backupService = ref.watch(backupServiceProvider);
+  late final UpdaterService _updaterService = ref.watch(updaterServiceProvider);
 
   @override
   SettingsData build() {
     return _initialization();
   }
 
-  SettingsData _initialization() {
-    final color = _settings.getColorSeed();
-
-    return SettingsData(
-      color: color,
-      locale: LocaleSettings.currentLocale,
-      isImporting: false,
-    );
-  }
+  SettingsData _initialization() => SettingsData(
+    color: _settings.getColorSeed,
+    locale: LocaleSettings.currentLocale,
+    isImporting: false,
+    allowPrerelease: _settings.getAllowPrerelease,
+  );
 
   Future<void> setColor(Color color) async {
     await _settings.setColorSeed(color);
     state = state.copyWith(color: color);
+  }
+
+  Future<void> setAllowPrerelease(bool allow) async {
+    await _settings.setAllowPrerelease(allow);
+    state = state.copyWith(allowPrerelease: allow);
+  }
+
+  void setLocale(AppLocale locale) => state = state.copyWith(locale: locale);
+
+  void cancelUpdateLocale() => state = state.copyWith(
+    locale: _settings.getStoredLocale ?? LocaleSettings.currentLocale,
+  );
+
+  Future<bool> saveLocale() async {
+    if (state.locale != LocaleSettings.currentLocale) {
+      await _settings.setAppLocale(state.locale);
+      return true;
+    }
+
+    return false;
   }
 
   Future<void> exportData(String outputPath) async {
@@ -59,6 +79,19 @@ class SettingsNotifier extends Notifier<SettingsData> {
       state = state.copyWith(isImporting: false);
     }
   }
+
+  Future<VersionModel?> checkLatest() async {
+    try {
+      final latest = await _updaterService.checkUpdate(
+        showPrerelease: _settings.getAllowPrerelease,
+      );
+
+      await _settings.setDateCheckUpdate(DateTime.timestamp());
+      return latest;
+    } catch (err) {
+      return null;
+    }
+  }
 }
 
 @freezed
@@ -67,9 +100,11 @@ class SettingsData with _$SettingsData {
     required this.color,
     required this.locale,
     required this.isImporting,
+    required this.allowPrerelease,
   });
 
   final Color color;
   final AppLocale locale;
   final bool isImporting;
+  final bool allowPrerelease;
 }

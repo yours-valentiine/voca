@@ -9,6 +9,9 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voca/config/dependecies.dart';
+import 'package:voca/i18n/strings.g.dart';
+import 'package:voca/router/routes.dart';
+import 'package:voca/shared/ui/widgets/material_switch.dart';
 import 'package:voca/shared/util/context_helpers.dart';
 import 'package:voca/shared/util/locale_helpers.dart';
 
@@ -31,6 +34,32 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.translate_outlined),
             title: Text(translations(context).settings.language.title),
             subtitle: Text(settings.locale.toDisplay()),
+            onTap: () async => await showChangeLanguageDialog(
+              context,
+              onLocaleChanged: (value) => notifier.setLocale(value),
+              onConfirmTap: () async {
+                final result = await notifier.saveLocale();
+                if (context.mounted) {
+                  if (result) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Durations.extralong2,
+                        content: Text(
+                          translations(
+                            context,
+                          ).settings.language.change.message,
+                        ),
+                      ),
+                    );
+                  }
+                  context.pop();
+                }
+              },
+              onCancelTap: () {
+                notifier.cancelUpdateLocale();
+                context.pop();
+              },
+            ),
           ),
           const Divider(),
           SettingsSection(
@@ -52,29 +81,12 @@ class SettingsScreen extends ConsumerWidget {
                     color: settings.color,
                   ),
                 ),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text(
-                        translations(
-                          context,
-                        ).settings.theme.dynamicColor.dialogTitle,
-                      ),
-                      content: MaterialPicker(
-                        pickerColor: settings.color,
-                        onColorChanged: (value) async =>
-                            await notifier.setColor(value),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => context.pop(),
-                          child: Text(translations(context).base.cancel),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onTap: () => showColorPickerDialog(
+                  context,
+                  onColorChanged: (value) async =>
+                      await notifier.setColor(value),
+                  onDoneTap: () => context.pop(),
+                ),
               ),
             ],
           ),
@@ -104,6 +116,79 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const Divider(),
           SettingsSection(
+            label: translations(context).settings.updates.title,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.science_outlined),
+                title: Text(
+                  translations(context).settings.updates.prerelease.title,
+                ),
+                subtitle: Text(
+                  translations(context).settings.updates.prerelease.description,
+                ),
+                trailing: MaterialSwitch(
+                  value: settings.allowPrerelease,
+                  onChanged: (value) async {
+                    if (value) {
+                      await showAllowPrereleaseDialog(
+                        value,
+                        context,
+                        onAllow: () async =>
+                            await notifier.setAllowPrerelease(value),
+                      );
+                    } else {
+                      await notifier.setAllowPrerelease(value);
+                    }
+                  },
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.update),
+                title: Text(translations(context).settings.updates.check.title),
+                subtitle: Text(
+                  translations(context).settings.updates.check.description,
+                ),
+                onTap: () async {
+                  final result = await notifier.checkLatest();
+
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Durations.extralong2,
+                        content: result == null
+                            ? Text(
+                                translations(
+                                  context,
+                                ).settings.updates.check.message.yourLatest,
+                              )
+                            : Text(
+                                translations(context)
+                                    .settings
+                                    .updates
+                                    .check
+                                    .message
+                                    .newVersion(version: result.version),
+                              ),
+                        action: result == null
+                            ? null
+                            : SnackBarAction(
+                                label: translations(
+                                  context,
+                                ).settings.updates.check.message.update,
+                                onPressed: () => context.go(
+                                  Routes.updating.location,
+                                  extra: result,
+                                ),
+                              ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+          const Divider(),
+          SettingsSection(
             label: translations(context).settings.other.title,
             children: [
               ListTile(
@@ -118,9 +203,135 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
+  Future<void> showAllowPrereleaseDialog(
+    bool value,
+    BuildContext context, {
+    required VoidCallback onAllow,
+  }) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(translations(context).settings.updates.prerelease.title),
+        content: Text.rich(
+          translations(context).settings.updates.prerelease.warning(
+            bold: (text) => TextSpan(
+              text: text,
+              style: typography(
+                context,
+              ).bodyMedium?.copyWith(fontWeight: .w700),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.pop(false);
+            },
+            child: Text(translations(context).base.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              context.pop(true);
+            },
+            child: Text(translations(context).base.confirm),
+          ),
+        ],
+      ),
+    );
+
+    if (result ?? false) onAllow();
+  }
+
+  Future<void> showColorPickerDialog(
+    BuildContext context, {
+    required ValueChanged<Color> onColorChanged,
+    required VoidCallback onDoneTap,
+  }) => showDialog(
+    context: context,
+    builder: (context) => Consumer(
+      builder: (context, ref, child) {
+        final color = ref.watch(
+          settingsNotifierProvider.select((s) => s.color),
+        );
+        return AlertDialog(
+          title: Text(
+            translations(context).settings.theme.dynamicColor.dialogTitle,
+          ),
+          content: MaterialPicker(
+            pickerColor: color,
+            onColorChanged: onColorChanged,
+          ),
+          actions: [
+            TextButton(
+              onPressed: onDoneTap,
+              child: Text(translations(context).base.done),
+            ),
+          ],
+        );
+      },
+    ),
+  );
+
+  Future<void> showChangeLanguageDialog(
+    BuildContext context, {
+    required ValueChanged<AppLocale> onLocaleChanged,
+    required VoidCallback onConfirmTap,
+    required VoidCallback onCancelTap,
+  }) => showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => AlertDialog(
+      title: Text(translations(context).settings.language.change.title),
+      content: Consumer(
+        builder: (context, ref, child) {
+          final currentLocale = ref.watch(
+            settingsNotifierProvider.select((s) => s.locale),
+          );
+          return SizedBox(
+            width: 320,
+            height: 240,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: AppLocale.values.length,
+              itemBuilder: (context, index) {
+                final tileLocale = AppLocale.values[index];
+                return ListTile(
+                  leading: currentLocale == tileLocale
+                      ? const Icon(Icons.check)
+                      : null,
+                  title: Text(tileLocale.toDisplay()),
+                  selected: currentLocale == tileLocale,
+                  selectedTileColor: colorScheme(context).primaryContainer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(18),
+                  ),
+                  onTap: () => onLocaleChanged(tileLocale),
+                );
+              },
+            ),
+          );
+        },
+      ),
+      actions: [
+        TextButton(
+          onPressed: onCancelTap,
+          child: Text(translations(context).base.cancel),
+        ),
+        TextButton(
+          onPressed: onConfirmTap,
+          child: Text(translations(context).base.confirm),
+        ),
+      ],
+    ),
+  );
+
   void _aboutVocaShow(BuildContext context) => showAboutDialog(
     context: context,
-    applicationIcon: Image.asset("assets/icon/icon.png", height: 100, width: 100),
+    applicationIcon: Image.asset(
+      "assets/icon/icon.png",
+      height: 100,
+      width: 100,
+    ),
     applicationName: "Voca",
     applicationVersion: "v.0.1.0-alpha.1",
     applicationLegalese: "\u00a9 2026 yours.valentiine",

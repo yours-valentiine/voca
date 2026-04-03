@@ -8,7 +8,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:voca/config/dependecies.dart';
-import 'package:voca/shared/error/errors.dart';
+import 'package:voca/shared/error/database_errors.dart';
 import 'package:voca/shared/model/word_model.dart';
 import 'package:voca/data/repository/dictionary_repository.dart';
 
@@ -27,10 +27,9 @@ class WordNotifier extends AsyncNotifier<WordModel> {
   }
 
   Future<WordModel> _load() async {
-    final word = await _dictionaryRepository.getSingleWord(wordId);
+    final word = await _dictionaryRepository.getSingleWordOrNull(wordId);
     if (word case null) {
-      // TODO
-      throw WordNotFound(message: "Word with $wordId not found");
+      throw WordNotFoundError(message: "Word with $wordId not found");
     }
     return word;
   }

@@ -10,7 +10,8 @@ enum Routes {
   word("/word"),
   editWord("/edit-word"),
   spacedRepetition("/spaced-repetition"),
-  settings("/settings");
+  settings("/settings"),
+  updating("/updating");
 
   final String location;
 

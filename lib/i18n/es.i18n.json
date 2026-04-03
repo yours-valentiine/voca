@@ -5,7 +5,9 @@
     "base": {
         "edit": "Editar",
         "delete": "Eliminar",
-        "cancel": "Cancelar"
+        "cancel": "Cancelar",
+        "done": "Hecho",
+        "confirm": "Confirmar"
     },
     "root": {
         "dictionary": "Diccionario",
@@ -34,7 +36,11 @@
     "settings": {
         "title": "Ajustes",
         "language": {
-            "title": "Idioma"
+            "title": "Idioma",
+            "change": {
+                "title": "Seleccionar idioma",
+                "message": "Los cambios se guardarán después de reiniciar la aplicación"
+            }
         },
         "theme": {
             "title": "Tema",
@@ -55,6 +61,23 @@
                 "title": "Importar datos",
                 "description": "Cargar datos guardados previamente.",
                 "success": "Datos importados"
+            }
+        },
+        "updates": {
+            "title": "Actualizaciones",
+            "prerelease": {
+                "title": "Activar versiones preliminares",
+                "description": "Las versiones preliminares son inestables y pueden contener errores.",
+                "warning(rich)": "${bold(ATENCIÓN:)} Las versiones preliminares son inestables y pueden contener errores críticos. ¿Estás seguro de que quieres activar las versiones preliminares?"
+            },
+            "check": {
+                "title": "Buscar actualizaciones",
+                "description": "Busca las últimas versiones de la aplicación. Los datos del servidor pueden estar desactualizados.",
+                "message": {
+                    "yourLatest": "Su versión es la más reciente",
+                    "newVersion": "Nueva versión disponible: ${version}",
+                    "update": "Actualizar"
+                }
             }
         },
         "other": {
@@ -103,5 +126,24 @@
             },
             "next": "Siguiente"
         }
+    },
+    "updating": {
+        "title": "Descargar la actualización",
+        "started": {
+            "title": "La nueva versión está lista:",
+            "download": "Descargar"
+        },
+        "downloading": {
+            "title": "Por favor, espere...",
+            "progress": "Progreso de descarga: ${count} MiB de ${total} MiB"
+        },
+        "ready": {
+            "title": "El archivo se ha descargado. Espere a que comience la instalación.",
+            "dialog": {
+                "title": "Cancelar instalación",
+                "content": "¿Está seguro de que desea cancelar la instalación? Podrá reanudarla más tarde."
+            }
+        },
+        "errorButton": "Ir a inicio"
     }
 }

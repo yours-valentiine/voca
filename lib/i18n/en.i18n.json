@@ -5,7 +5,9 @@
     "base": {
         "edit": "Edit",
         "delete": "Delete",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "done": "Done",
+        "confirm": "Confirm"
     },
     "root": {
         "dictionary": "Dictionary",
@@ -34,7 +36,11 @@
     "settings": {
         "title": "Settings",
         "language": {
-            "title": "Language"
+            "title": "Language",
+            "change": {
+                "title": "Select language",
+                "message": "The changes will be saved after restarting the application"
+            }
         },
         "theme": {
             "title": "Theme",
@@ -55,6 +61,23 @@
                 "title": "Data import",
                 "description": "Load previously saved data.",
                 "success": "Data imported"
+            }
+        },
+        "updates": {
+            "title": "Updates",
+            "prerelease": {
+                "title": "Enable pre-release",
+                "description": "Pre-release versions are unstable and may contain bugs.",
+                "warning(rich)": "${bold(ATTENTION:)} Pre-release versions are unstable and may contain critical bugs. Are you sure you want to enable pre-releases?"
+            },
+            "check": {
+                "title": "Check updates",
+                "description": "Check for the latest app versions. Server data may be delayed.",
+                "message": {
+                    "yourLatest": "Your version is the latest",
+                    "newVersion": "New version available: ${version}",
+                    "update": "Update"
+                }
             }
         },
         "other": {
@@ -103,5 +126,24 @@
             },
             "next": "Next"
         }
+    },
+    "updating": {
+        "title": "Download the update",
+        "started": {
+            "title": "The new version is ready:",
+            "download": "Download"
+        },
+        "downloading": {
+            "title": "Please wait...",
+            "progress": "Download progress: ${count} MiB out of ${total} MiB"
+        },
+        "ready": {
+            "title": "The file has been downloaded. Please wait for the installation to begin.",
+            "dialog": {
+                "title": "Cancel installation",
+                "content": "Are you sure you want to cancel the installation? You can resume it later."
+            }
+        },
+        "errorButton": "Go to home"
     }
 }
