@@ -92,6 +92,7 @@ class RootShell extends ConsumerWidget {
                       children: [
                         ListView.builder(
                           shrinkWrap: true,
+                          padding: EdgeInsets.zero,
                           itemCount: data.length,
                           itemBuilder: (context, index) {
                             final dictionary = data[index];

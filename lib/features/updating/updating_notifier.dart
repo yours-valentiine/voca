@@ -38,7 +38,7 @@ class UpdatingNotifier extends Notifier<UpdatingState> {
         orElse: () {},
       );
 
-      await Future.delayed(Duration(seconds: 10));
+      await Future.delayed(Duration(seconds: 3));
       await install();
     } catch (error) {
       state = .error(error: error as Exception);

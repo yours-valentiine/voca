@@ -75,7 +75,8 @@ class WordScreen extends ConsumerWidget {
                     DataBlock(
                       child: ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
                         itemCount: data.translates.length,
                         itemBuilder: (context, index) {
                           final currentTranslate = data.translates[index];
@@ -122,7 +123,7 @@ class DataBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      margin: const EdgeInsets.all(0),
+      margin: EdgeInsets.zero,
       color: color ?? colorScheme(context).surfaceContainer,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
