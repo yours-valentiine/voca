@@ -70,6 +70,8 @@ class UpdaterService {
       if (!await updateInfoFile.exists()) await updateInfoFile.create();
 
       await updateInfoFile.writeAsString(jsonEncode(latestUpdate.toJson()));
+      await settings.setDateCheckUpdate(DateTime.timestamp());
+
       return latestUpdate;
     }
 
@@ -99,12 +101,8 @@ class UpdaterService {
     final response = await _dio.get("$_baseUrl$_realeseUrl");
 
     if (response.statusCode == HttpStatus.ok) {
-      try {
-        final version = VersionModel.fromJson(response.data);
-        return version;
-      } catch (error) {
-        rethrow;
-      }
+      final version = VersionModel.fromJson(response.data);
+      return version;
     }
     return null;
   }

@@ -8,6 +8,15 @@ sealed class ServiceError implements Exception {
   final StackTrace? stackTrace;
 
   ServiceError({required this.message, this.stackTrace});
+
+  @override
+  String toString() {
+    final buffer = StringBuffer('$runtimeType: $message');
+    if (stackTrace != null) {
+      buffer.write('\n$stackTrace');
+    }
+    return buffer.toString();
+  }
 }
 
 class UnsupportedPlatformError extends ServiceError {
@@ -40,4 +49,11 @@ class HashVerificationError extends ServiceError {
          message:
              "Hash verification failed:\nExpected: $expected\nGot: $computed",
        );
+}
+
+class AssetsNotFoundError extends ServiceError {
+  final String platform;
+
+  AssetsNotFoundError({required this.platform, super.stackTrace})
+    : super(message: "Assets for $platform were not found.");
 }

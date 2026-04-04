@@ -1,3 +1,8 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+// dictionary_repository.dart
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
@@ -53,7 +58,10 @@ class DictionaryRepository {
     final data = await dictionaryDao.getSingle(id.toBytes());
 
     if (data case null) {
-      throw DictionaryNotFoundError(message: "dictionary with $id not found");
+      throw DictionaryNotFoundError(
+        dictionaryId: id,
+        stackTrace: StackTrace.current,
+      );
     }
 
     return DictionaryModel(
@@ -69,7 +77,10 @@ class DictionaryRepository {
     final data = await dictionaryDao.getSingleOrNull();
 
     if (data case null) {
-      throw DictionaryNotFoundError(message: "dictionary table is empty");
+      throw DictionaryNotFoundError(
+        dictionaryId: "LAST",
+        stackTrace: StackTrace.current,
+      );
     }
 
     return DictionaryModel(

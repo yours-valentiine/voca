@@ -31,7 +31,10 @@ class EditWordNotifier extends AsyncNotifier<WordModel> {
     final stored = await _load(wordId!);
 
     return switch (stored) {
-      null => throw WordNotFoundError(message: "$wordId"),
+      null => throw WordNotFoundError(
+        wordId: wordId,
+        stackTrace: StackTrace.current,
+      ),
       WordModel() => stored,
     };
   }

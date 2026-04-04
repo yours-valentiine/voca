@@ -32,6 +32,7 @@ class SettingsNotifier extends Notifier<SettingsData> {
     locale: LocaleSettings.currentLocale,
     isImporting: false,
     allowPrerelease: _settings.getAllowPrerelease,
+    isCheckUpdate: false,
   );
 
   Future<void> setColor(Color color) async {
@@ -82,14 +83,17 @@ class SettingsNotifier extends Notifier<SettingsData> {
 
   Future<VersionModel?> checkLatest() async {
     try {
+      state = state.copyWith(isCheckUpdate: true);
+
       final latest = await _updaterService.checkUpdate(
         showPrerelease: _settings.getAllowPrerelease,
       );
 
-      await _settings.setDateCheckUpdate(DateTime.timestamp());
       return latest;
     } catch (err) {
       return null;
+    } finally {
+      state = state.copyWith(isCheckUpdate: false);
     }
   }
 }
@@ -101,10 +105,12 @@ class SettingsData with _$SettingsData {
     required this.locale,
     required this.isImporting,
     required this.allowPrerelease,
+    required this.isCheckUpdate,
   });
 
   final Color color;
   final AppLocale locale;
   final bool isImporting;
+  final bool isCheckUpdate;
   final bool allowPrerelease;
 }

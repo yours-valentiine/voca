@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:voca/config/dependecies.dart';
 import 'package:voca/features/updating/updating_notifier.dart';
 import 'package:voca/router/routes.dart';
-import 'package:voca/shared/error/service_errors.dart';
 import 'package:voca/shared/service/updater/models/version_model.dart';
 import 'package:voca/shared/util/context_helpers.dart';
 
@@ -137,17 +136,7 @@ class UpdatingScreen extends ConsumerWidget {
           error: (error) => Column(
             mainAxisAlignment: .center,
             children: [
-              () {
-                if (error case ServiceError serviceError) {
-                  return switch (serviceError) {
-                    UnsupportedPlatformError() => Text(error.message),
-                    HttpFailedError() => Text(error.message),
-                    HashVerificationError() => Text(error.message),
-                  };
-                } else {
-                  return Text(error.toString());
-                }
-              }(),
+              Text(error.toString()),
               const SizedBox(height: 12),
               TextButton(
                 onPressed: () => context.pop(),

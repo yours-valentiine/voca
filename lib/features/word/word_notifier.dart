@@ -29,7 +29,7 @@ class WordNotifier extends AsyncNotifier<WordModel> {
   Future<WordModel> _load() async {
     final word = await _dictionaryRepository.getSingleWordOrNull(wordId);
     if (word case null) {
-      throw WordNotFoundError(message: "Word with $wordId not found");
+      throw WordNotFoundError(wordId: wordId, stackTrace: StackTrace.current);
     }
     return word;
   }

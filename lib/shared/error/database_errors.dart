@@ -5,20 +5,30 @@
 // errors.dart
 sealed class DatabaseError implements Exception {
   final String message;
+  final StackTrace? stackTrace;
 
-  DatabaseError({required this.message});
+  DatabaseError({required this.message, this.stackTrace});
+
+  @override
+  String toString() {
+    final buffer = StringBuffer('$runtimeType: $message');
+    if (stackTrace != null) {
+      buffer.write('\n$stackTrace');
+    }
+    return buffer.toString();
+  }
 }
 
 class WordNotFoundError extends DatabaseError {
-  WordNotFoundError({required super.message});
+  final Object? wordId;
 
-  @override
-  String toString() => "Word not found: $message";
+  WordNotFoundError({required this.wordId, super.stackTrace})
+    : super(message: "Word with $wordId not found");
 }
 
 class DictionaryNotFoundError extends DatabaseError {
-  DictionaryNotFoundError({required super.message});
+  final Object dictionaryId;
 
-  @override
-  String toString() => "Dictionary not found: $message";
+  DictionaryNotFoundError({required this.dictionaryId, super.stackTrace})
+    : super(message: "Dictionary $dictionaryId not found");
 }
