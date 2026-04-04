@@ -9,7 +9,6 @@ import 'package:voca/shared/model/translate_model.dart';
 import 'package:voca/shared/model/word_model.dart';
 import 'package:voca/shared/util/object_helper.dart';
 
-// TODO: Localize error message
 class DictionaryRepository {
   // #region DI classes
 

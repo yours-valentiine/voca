@@ -98,14 +98,11 @@ class UpdaterService {
   Future<VersionModel?> _checkUpdateLatest() async {
     final response = await _dio.get("$_baseUrl$_realeseUrl");
 
-    print(response.data.runtimeType);
-
     if (response.statusCode == HttpStatus.ok) {
       try {
         final version = VersionModel.fromJson(response.data);
         return version;
       } catch (error) {
-        print(error);
         rethrow;
       }
     }
